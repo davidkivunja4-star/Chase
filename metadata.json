@@ -1,0 +1,8 @@
+{
+  "name": "HavenShare - Fractional Real Estate Investment",
+  "description": "Invest in high-yield fractional real estate properties with as little as $20. Earn passive rental dividends, quarterly payouts, and long-term equity appreciation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

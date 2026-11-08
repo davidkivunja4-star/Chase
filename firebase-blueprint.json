@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with authentication and contact information",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Registered email address"
+        },
+        "mobileNumber": {
+          "type": "string",
+          "description": "Verified mobile phone number"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Full legal or investor name"
+        },
+        "role": {
+          "type": "string",
+          "description": "User permission role: admin or investor",
+          "enum": ["admin", "investor"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account registration"
+        },
+        "accountTier": {
+          "type": "string",
+          "description": "Investor account tier"
+        },
+        "walletBalance": {
+          "type": "number",
+          "description": "Cash balance available for investments"
+        }
+      },
+      "required": ["email", "mobileNumber"]
+    },
+    "PropertyOffering": {
+      "title": "PropertyOffering",
+      "description": "Fractional real estate asset offering",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "plan": { "type": "string", "enum": ["HABIBI", "DUBAJ"] },
+        "sharePrice": { "type": "number" },
+        "totalShares": { "type": "number" },
+        "sharesRemaining": { "type": "number" },
+        "status": { "type": "string", "enum": ["funding", "nearly_funded", "funded"] },
+        "city": { "type": "string" },
+        "state": { "type": "string" }
+      },
+      "required": ["title", "plan", "sharePrice", "totalShares"]
+    },
+    "DividendDistribution": {
+      "title": "DividendDistribution",
+      "description": "Monthly dividend batch distribution record",
+      "type": "object",
+      "properties": {
+        "batchId": { "type": "string" },
+        "executedAt": { "type": "string" },
+        "totalAmountDisbursed": { "type": "number" },
+        "propertiesIncluded": { "type": "number" },
+        "investorsBenefited": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["batchId", "totalAmountDisbursed"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document storing personal credentials and mobile contact"
+    },
+    "/properties/{propertyId}": {
+      "schema": "PropertyOffering",
+      "description": "Property offerings managed by platform administrators"
+    },
+    "/dividend_distributions/{distributionId}": {
+      "schema": "DividendDistribution",
+      "description": "Historical dividend batch execution records"
+    }
+  }
+}

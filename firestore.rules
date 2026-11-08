@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'davidkivunja4@gmail.com' ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // User profile documents
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Real estate properties offerings (Plan 1 HABIBI & Plan 2 DUBAJ)
+    match /properties/{propertyId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Dividend distribution logs
+    match /dividend_distributions/{distributionId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Subscription & Re-investment applications
+    match /subscription_applications/{appId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Plan investor period & returns trackers
+    match /investor_trackers/{trackerId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Boot connection validation test doc
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
